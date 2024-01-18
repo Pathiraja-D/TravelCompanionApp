@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -151,6 +152,7 @@ class _JourneyPageState extends State<JourneyAddPage> {
                       ),
                     ),
                     TextFormField(
+                      inputFormatters: [LengthLimitingTextInputFormatter(30)],
                       validator: (val) => val!.trim().isEmpty
                           ? "Journey should have a name"
                           : null,
