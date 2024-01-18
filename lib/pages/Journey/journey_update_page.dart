@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:travel_journal/components/app_colors.dart';
 import 'package:travel_journal/models/journey.dart';
 import 'package:travel_journal/models/note_model.dart';
@@ -192,6 +193,7 @@ class _JourneyPageState extends State<JourneyUpdatePage> {
                         ),
                       ),
                       TextFormField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(30)],
                         enabled: isEdditingEnabled,
                         controller: titlecontroller,
                         style: TextStyle(

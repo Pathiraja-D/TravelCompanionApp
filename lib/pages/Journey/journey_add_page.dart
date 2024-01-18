@@ -25,13 +25,9 @@ class _JourneyPageState extends State<JourneyAddPage> {
   UploadTask? uploadTask;
   List<String> imagesList = [];
   List<String> downloadURLs = [];
-  String title = "";
-  String description = "";
-  String locations = "";
-
-  // TextEditingController titlecontroller = TextEditingController();
-  // TextEditingController descriptioncontroller = TextEditingController();
-  // TextEditingController locationcontroller = TextEditingController();
+  TextEditingController title = TextEditingController();
+  TextEditingController description = TextEditingController();
+  TextEditingController locations = TextEditingController();
   bool addingFinish = true;
   String journeyCreated = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -152,15 +148,11 @@ class _JourneyPageState extends State<JourneyAddPage> {
                       ),
                     ),
                     TextFormField(
+                      controller: title,
                       inputFormatters: [LengthLimitingTextInputFormatter(30)],
                       validator: (val) => val!.trim().isEmpty
                           ? "Journey should have a name"
                           : null,
-                      onChanged: (val) {
-                        setState(() {
-                          title = val;
-                        });
-                      },
                       enabled: addingFinish,
                       // controller: titlecontroller,
                       style: TextStyle(
@@ -189,11 +181,7 @@ class _JourneyPageState extends State<JourneyAddPage> {
                       ),
                     ),
                     TextFormField(
-                      onChanged: (val) {
-                        setState(() {
-                          description = val;
-                        });
-                      },
+                      controller: description,
                       enabled: addingFinish,
                       style: TextStyle(
                         color: Colors.black,
@@ -221,11 +209,7 @@ class _JourneyPageState extends State<JourneyAddPage> {
                       ),
                     ),
                     TextFormField(
-                      onChanged: (val) {
-                        setState(() {
-                          locations = val;
-                        });
-                      },
+                      controller: locations,
                       enabled: addingFinish,
                       // controller: locationcontroller,
                       style: TextStyle(
@@ -259,15 +243,17 @@ class _JourneyPageState extends State<JourneyAddPage> {
 
                                 try {
                                   journeyCreated = await journeyServices
-                                      .createJourneyInJourneyCollection(title,
-                                          description, locations, downloadURLs);
+                                      .createJourneyInJourneyCollection(
+                                          title.text,
+                                          description.text,
+                                          locations.text,
+                                          downloadURLs);
 
                                   note = await noteServices
                                       .getOneNote(journeyCreated);
                                   await uploadImages(note!.noteId);
 
-                                  if (journeyCreated.isNotEmpty &&
-                                      downloadURLs.isNotEmpty) {
+                                  if (journeyCreated.isNotEmpty) {
                                     await journeyServices
                                         .updateJourneyImageURLs(
                                             downloadURLs, journeyCreated);
@@ -287,6 +273,9 @@ class _JourneyPageState extends State<JourneyAddPage> {
                                   setState(() {
                                     isButtonDisabled = false;
                                     addingFinish = false;
+                                    title.clear();
+                                    locations.clear();
+                                    description.clear();
                                     imagesList = [];
                                     downloadURLs = [];
                                     pickedFiles = [];

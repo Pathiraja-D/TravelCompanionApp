@@ -73,7 +73,7 @@ Widget noteCard(Function()? onTap, Note note) {
                         'Created Date:${note.date.toLocal().day}/${note.date.toLocal().month}/${note.date.toLocal().year} Created Time:${note.date.toLocal().hour}:${note.date.toLocal().minute}',
                         style: TextStyle(
                             color: Color(0xF7373535),
-                            fontSize: 15,
+                            fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
