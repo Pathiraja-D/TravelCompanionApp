@@ -139,7 +139,6 @@ class _MapPageState extends State<MapPage> {
   //Add location to the user locations list
   List<String>? addLocationToList() {
     return locationInfo;
-    print(locationInfo);
   }
 
   @override
@@ -189,7 +188,7 @@ class _MapPageState extends State<MapPage> {
         ]),
       ),
       Container(
-        height: height * 0.3,
+        height: height * 0.2,
         child: Visibility(
           visible: isListShowing,
           child: showList(),

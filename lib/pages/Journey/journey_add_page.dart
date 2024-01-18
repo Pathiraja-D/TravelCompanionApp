@@ -20,7 +20,7 @@ class JourneyAddPage extends StatefulWidget {
 }
 
 class _JourneyPageState extends State<JourneyAddPage> {
-  late List<PlatformFile> pickedFiles;
+  List<PlatformFile> pickedFiles = [];
   PlatformFile? pickedFile;
   UploadTask? uploadTask;
   List<String> imagesList = [];
@@ -33,7 +33,7 @@ class _JourneyPageState extends State<JourneyAddPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   JourneyServices journeyServices = JourneyServices();
   NoteServices noteServices = NoteServices();
-  bool isButtonDisabled = false;
+  bool isButtonEnabled = true;
   String date = DateTime.now.toString();
   DateTime displayDateTime = DateTime.now();
 
@@ -111,7 +111,7 @@ class _JourneyPageState extends State<JourneyAddPage> {
                 right: 10,
                 child: FloatingActionButton(
                   onPressed: () async {
-                    pickImages();
+                    await pickImages();
                   },
                   child: Icon(Icons.upload),
                 ),
@@ -235,12 +235,7 @@ class _JourneyPageState extends State<JourneyAddPage> {
                         width: width * 0.6,
                         child: ElevatedButton(
                             onPressed: () async {
-                              // Disable the button to prevent multiple presses
                               if (formKey.currentState!.validate()) {
-                                setState(() {
-                                  isButtonDisabled = true;
-                                });
-
                                 try {
                                   journeyCreated = await journeyServices
                                       .createJourneyInJourneyCollection(
@@ -271,14 +266,11 @@ class _JourneyPageState extends State<JourneyAddPage> {
                                   }
                                 } finally {
                                   setState(() {
-                                    isButtonDisabled = false;
                                     addingFinish = false;
                                     title.clear();
                                     locations.clear();
                                     description.clear();
                                     imagesList = [];
-                                    downloadURLs = [];
-                                    pickedFiles = [];
                                   });
                                 }
                               }
@@ -303,6 +295,39 @@ class _JourneyPageState extends State<JourneyAddPage> {
             ),
           ]),
         ));
+  }
+
+  void signInAndUpload() async {
+    try {
+      journeyCreated = await journeyServices.createJourneyInJourneyCollection(
+          title.text, description.text, locations.text, downloadURLs);
+
+      if (journeyCreated.isNotEmpty && downloadURLs.isNotEmpty) {
+        await journeyServices.updateJourneyImageURLs(
+            downloadURLs, journeyCreated);
+
+        note = await noteServices.getOneNote(journeyCreated);
+        await uploadImages(note!.noteId);
+        setState(() {
+          addingFinish = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Journey Added Successfully"),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } finally {
+      setState(() {
+        isButtonEnabled = false;
+        title.clear();
+        locations.clear();
+        description.clear();
+        imagesList = [];
+      });
+    }
   }
 
   Widget buildImages(String imagePath, int index) => Container(
