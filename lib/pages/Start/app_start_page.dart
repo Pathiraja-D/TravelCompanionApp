@@ -53,7 +53,7 @@ class _AppStartPageState extends State<AppStartPage> {
                   Spacer(),
                   Container(
                     height: 62,
-                    width: 311,
+                    width: 350,
                     decoration: BoxDecoration(
                       color: AppColors.yellowColor,
                       borderRadius: BorderRadius.circular(25),
@@ -62,10 +62,10 @@ class _AppStartPageState extends State<AppStartPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Travel Journal",
+                          "Travel Companion",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 36,
+                            fontSize: 30,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
