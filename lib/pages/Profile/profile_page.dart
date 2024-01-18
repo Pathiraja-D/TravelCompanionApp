@@ -2,12 +2,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_journal/config/app_colors.dart';
-import 'package:travel_journal/config/app_images.dart';
 import 'package:travel_journal/models/firebase_user_model.dart';
-import 'package:travel_journal/pages/Autheticate/authentication.dart';
 import 'package:travel_journal/services/auth/auth.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -54,6 +50,7 @@ class _AppSetUpPageState extends State<ProfilePage> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: AppColors.mainColor,
           elevation: 0,
           actions: [

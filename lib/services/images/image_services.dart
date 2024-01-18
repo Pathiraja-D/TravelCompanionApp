@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ImageServices {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -12,17 +11,6 @@ class ImageServices {
     UploadTask? uploadTask;
 
     try {
-      // for (var xFile in xFiles) {
-      //   File file = File(xFile.path);
-      //   var timeStamp = DateTime.now().millisecondsSinceEpoch;
-      //   var imageName = '$noteId$timeStamp.jpg';
-
-      //   TaskSnapshot snapshot = await _storage
-      //       .ref('note_images/$noteId/$imageName')
-      //       .putFile(file);
-
-      //   String imageUrl = await snapshot.ref.getDownloadURL();
-      //   downloadURLs.add(imageUrl);
       final file = File(pickedFile!.path!);
       final ref = _storage.ref().child(path);
       uploadTask = ref.putFile(file);

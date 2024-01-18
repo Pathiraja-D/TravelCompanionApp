@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_journal/config/app_images.dart';
 import 'package:travel_journal/config/app_routes.dart';
-import 'package:travel_journal/pages/Autheticate/forgot_password_page.dart';
 import 'package:travel_journal/services/auth/auth.dart';
 
 class LoginPage extends StatefulWidget {

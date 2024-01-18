@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_journal/components/app_colors.dart';
 import 'package:travel_journal/models/note_model.dart';
-import 'package:travel_journal/pages/Plans/plan_add_page.dart';
 import 'package:travel_journal/pages/home_navigator.dart';
 import 'package:travel_journal/services/journey/journey_services.dart';
 import 'package:travel_journal/services/notes/note_services.dart';
